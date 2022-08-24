@@ -14,7 +14,7 @@ import {useEffect, useState} from 'react';
 
 const List = () => {
 
-  const url = 'https://raw.githubusercontent.com/mattpe/wbma/master/docs/assets/test.json';
+  const url = 'https://media.mw.metropolia.fi/wbma/';
   const [mediaArray, setMediaArray] = useState([]);
 
   const loadMedia = async () => {
