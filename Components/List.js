@@ -14,15 +14,19 @@ import {useEffect, useState} from 'react';
 
 const List = () => {
 
-  const url = 'https://media.mw.metropolia.fi/wbma/';
+  const apiUrl = 'https://media.mw.metropolia.fi/wbma/';
   const [mediaArray, setMediaArray] = useState([]);
 
   const loadMedia = async () => {
     try {
-      const response = await fetch(url + 'media');
+      const response = await fetch(apiUrl + 'media');
       const json = await response.json();
       console.log(json);
-      setMediaArray(json);
+      const allMediaData = json.map(async (mediaItem) => {
+        const response = await fetch(apiUrl + 'media/' + mediaItem.file_id)
+        return await response.json();
+      });
+      setMediaArray(await Promise.all(allMediaData));
     } catch (error) {
       console.log('media fetch failed', error);
       //TODO: notify user?
