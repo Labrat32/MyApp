@@ -10,35 +10,14 @@ import {
   View,
 } from 'react-native';
 import ListItem from './ListItem';
-import {useEffect, useState} from 'react';
+import {useMedia} from '../hooks/ApiHooks';
 
 const List = () => {
-
-  const apiUrl = 'https://media.mw.metropolia.fi/wbma/';
-  const [mediaArray, setMediaArray] = useState([]);
-
-  const loadMedia = async () => {
-    try {
-      const response = await fetch(apiUrl + 'media');
-      const json = await response.json();
-      console.log(json);
-      const allMediaData = json.map(async (mediaItem) => {
-        const response = await fetch(apiUrl + 'media/' + mediaItem.file_id)
-        return await response.json();
-      });
-      setMediaArray(await Promise.all(allMediaData));
-    } catch (error) {
-      console.log('media fetch failed', error);
-      //TODO: notify user?
-    }
-  };
-  useEffect(() => {
-    loadMedia();
-  }, []);
-
+  const {mediaArray} = useMedia();
   return (
     <FlatList
       data={mediaArray}
+      keyExtractor={(item, index) => index.toString()}
       renderItem={({item}) => <ListItem singleMedia={item}/>}
     />
   );
