@@ -8,20 +8,26 @@ import {
 } from 'react-native';
 import PropsTypes from 'prop-types';
 
-const ListItem = (props) => {
+const ListItem = ({singleMedia, navigation}) => {
   const mediaUrl = 'https://media.mw.metropolia.fi/wbma/uploads/';
-  console.log(props.singleMedia)
+  console.log('listItem: ', singleMedia)
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={()=>{
+          navigation.navigate('Single', singleMedia);
+        }
+      }
+    >
       <View style={styles.row}>
         <Image
           style={styles.image}
-          source={{uri: mediaUrl + props.singleMedia.thumbnails.w160}}
+          source={{uri: mediaUrl + singleMedia.thumbnails.w160}}
         />
       </View>
       <View style={styles.row}>
-        <Text style={styles.title}>{props.singleMedia.title}</Text>
-        <Text>{props.singleMedia.description}</Text>
+        <Text style={styles.title}>{singleMedia.title}</Text>
+        <Text>{singleMedia.description}</Text>
       </View>
     </TouchableOpacity>
   );
