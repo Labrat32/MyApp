@@ -1,9 +1,6 @@
 import {Platform, SafeAreaView, StyleSheet,} from 'react-native';
 import PropsTypes from 'prop-types';
 import List from '../Components/List';
-import {
-  PropsType
-} from 'react-native/ReactCommon/hermes/inspector/tools/msggen/src/Type';
 
 const Home = (props) => {
   const {navigation} = props;
