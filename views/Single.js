@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
 import PropsTypes from 'prop-types';
-
-const mediaUrl = 'https://media.mw.metropolia.fi/wbma/uploads/';
+import {mediaUrl} from '../util/variables';
 
 const Single = ({route}) => {
   console.log('Single route: ', route)

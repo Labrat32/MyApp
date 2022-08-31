@@ -1,17 +1,17 @@
 import {useEffect, useState} from 'react';
+import {doFetch} from '../util/http';
+import {apiUrl} from '../util/variables';
 
-const apiUrl = 'http://media.mw.metropolia.fi/wbma/';
 
 const useMedia = () => {
   const [mediaArray, setMediaArray] = useState([]);
   const loadMedia = async () => {
     try {
-      const response = await fetch(apiUrl + 'media');
-      const json = await response.json();
+      const json = await doFetch(apiUrl + 'media?limit=5');
+
       console.log(json);
       const allMediaData = json.map(async (mediaItem) => {
-        const response = await fetch(apiUrl + 'media/' + mediaItem.file_id);
-        return await response.json();
+        return await doFetch(apiUrl + 'media/' + mediaItem.file_id);
       });
       setMediaArray(await Promise.all(allMediaData));
     } catch (error) {
@@ -26,8 +26,53 @@ const useMedia = () => {
   return {mediaArray};
 };
 const useUser = () => {
-  //TODO later
+  const getUserByToken = async (token) => {
+    try {
+      const options = {
+        method: 'GET',
+        headers: {'x-access-token': token},
+      };
+      const userData = await doFetch(apiUrl + 'users/user', options)
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  const postUser = async (userData) => {
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    };
+    try {
+      return await doFetch(apiUrl + 'users', options);
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+
+  return {getUserByToken, postUser};
 };
 
+const useLogin = () => {
+  const postLogin = async (userCredentials) => {
+    // user credentials format: {username: 'someUsername', password: 'somePassword'}
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userCredentials),
+    };
+    try {
+      return await  doFetch(apiUrl + 'login', options)
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  };
+  return {postLogin};
+}
 
-export {useMedia, useUser};
+export {useLogin, useMedia, useUser};
