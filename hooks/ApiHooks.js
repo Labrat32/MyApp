@@ -32,7 +32,8 @@ const useUser = () => {
         method: 'GET',
         headers: {'x-access-token': token},
       };
-      const userData = await doFetch(apiUrl + 'users/user', options)
+      const userData = await doFetch(apiUrl + 'users/user', options);
+      return userData;
     } catch (error) {
       throw new Error(error.message);
     }
@@ -75,4 +76,11 @@ const useLogin = () => {
   return {postLogin};
 }
 
-export {useLogin, useMedia, useUser};
+const useTag = () => {
+  const getFilesByTag = async (tag) => {
+    return await doFetch(apiUrl + 'tags/' + tag);
+  };
+  return {getFilesByTag};
+}
+
+export {useLogin, useMedia, useUser, useTag};
