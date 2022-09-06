@@ -1,30 +1,19 @@
 import React from 'react';
-import {StyleSheet, SafeAreaView, Text, Image} from 'react-native';
 import PropsTypes from 'prop-types';
 import {mediaUrl} from '../util/variables';
+import {Card} from '@rneui/themed';
 
 const Single = ({route}) => {
   console.log('Single route: ', route)
   const {filename, title} = route.params
   return (
-    <SafeAreaView style={styles.container}>
-      <Text>{title}</Text>
-      <Image source={{uri: mediaUrl + filename}}
-             style={{width: 200, height: 200}}/>
-    </SafeAreaView>
+    <Card>
+      <Card.Title>{title}</Card.Title>
+      <Card.Image source={{uri: mediaUrl + filename}} />
+    </Card>
   );
 };
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 40,
-  },
-});
 
 Single.propTypes = {
   route: PropsTypes.object,

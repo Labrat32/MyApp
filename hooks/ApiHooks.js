@@ -8,7 +8,6 @@ const useMedia = () => {
   const loadMedia = async () => {
     try {
       const json = await doFetch(apiUrl + 'media?limit=5');
-
       console.log(json);
       const allMediaData = json.map(async (mediaItem) => {
         return await doFetch(apiUrl + 'media/' + mediaItem.file_id);
@@ -16,7 +15,6 @@ const useMedia = () => {
       setMediaArray(await Promise.all(allMediaData));
     } catch (error) {
       console.log('media fetch failed', error);
-      //TODO: notify user?
     }
   };
 
@@ -59,8 +57,7 @@ const useUser = () => {
 
 const useLogin = () => {
   const postLogin = async (userCredentials) => {
-    // user credentials format: {username: 'someUsername', password: 'somePassword'}
-    const options = {
+     const options = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
