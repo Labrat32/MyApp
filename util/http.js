@@ -5,6 +5,7 @@ const doFetch = async (url, options = {}) => {
     if (response.ok) {
       return data;
     } else {
+      console.log('doFetch response not OK', data);
       throw new Error(data.message);
     }
   } catch (error) {
