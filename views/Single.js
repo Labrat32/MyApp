@@ -2,6 +2,7 @@ import React from 'react';
 import PropsTypes from 'prop-types';
 import {mediaUrl} from '../util/variables';
 import {Card} from '@rneui/themed';
+import FullSizeImage from '../Components/FullSizeImage';
 
 const Single = ({route}) => {
   console.log('Single route: ', route)
@@ -9,7 +10,7 @@ const Single = ({route}) => {
   return (
     <Card>
       <Card.Title>{title}</Card.Title>
-      <Card.Image source={{uri: mediaUrl + filename}} />
+      <FullSizeImage source={{uri: mediaUrl + filename}} />
     </Card>
   );
 };
